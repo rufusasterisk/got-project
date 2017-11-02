@@ -4,6 +4,8 @@ import {
   fetchSuccess,
   setHouseData,
   getHouseData } from '../actions/AppActions';
+import fetchMock from 'fetch-mock';
+import mockData from './mockData';
 
 const expectationTrue = (type) => ({
   type,
@@ -80,5 +82,12 @@ describe('setHouseData', () => {
 
     expect(setHouseData(objectArray)).toEqual(expected);
   });
+
+});
+
+describe('getHouseData', () => {
+  fetchMock.get('http://localhost:3001/api/v1/houses', mockData);
+  const myThunked = getHouseData();
+  console.log(myThunked);
 
 });
