@@ -5,7 +5,7 @@ import {
   setHouseData,
   getHouseData } from '../actions/AppActions';
 import fetchMock from 'fetch-mock';
-import mockData from './mockData';
+// import mockData from './mockData';
 
 const expectationTrue = (type) => ({
   type,
