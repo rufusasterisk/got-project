@@ -27,6 +27,29 @@ const buildFetchPayload = (url) => ({
   credentials: 'omit'
 });
 
+const getSwornMemberData = (houseArray) => (dispatch) => {
+  const compiledData = houseArray.map( (house) => {
+    const unresolvedSwornMemberPromises = house.swornMembers.map( (memberURL) => {
+      return fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
+        .then( response => {
+          return response.json();
+        })
+        .then(memberObject => {
+          return memberObject.name;
+        });
+    });
+    return Promise.all(unresolvedSwornMemberPromises)
+      .then(swornMemberStringArray => {
+        return Object.assign({}, house, {displayMembers: false, swornMemberNames: swornMemberStringArray});
+      });
+  });
+  Promise.all(compiledData)
+    .then( compiledDataArray => {
+      console.log(compiledDataArray);
+      dispatch(setHouseData(compiledDataArray));
+    });
+};
+
 
 export const getHouseData = (fetchData) => (dispatch) => {
   dispatch(fetchInProgress(true));
@@ -37,26 +60,7 @@ export const getHouseData = (fetchData) => (dispatch) => {
       dispatch(fetchInProgress(false));
       dispatch(fetchSuccess(true));
       dispatch(setHouseData(parsedResponse));
-      const compiledData = parsedResponse.map( (house) => {
-        const unresolvedSwornMemberPromises = house.swornMembers.map( (memberURL) => {
-          return fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
-            .then( response => {
-              return response.json();
-            })
-            .then(memberObject => {
-              return memberObject.name;
-            });
-        });
-        console.log(unresolvedSwornMemberPromises);
-        return Promise.all(unresolvedSwornMemberPromises)
-          .then(swornMemberStringArray => {
-            console.log(house.name);
-            console.log(swornMemberStringArray);
-            return Object.assign(house, {displayMembers: false, swornMemberNames: swornMemberStringArray});
-          });
-      });
-        console.log(compiledData);
-        dispatch(setHouseData(compiledData));
+      dispatch(getSwornMemberData(parsedResponse));
     })
     .catch(error => {
       dispatch(fetchInProgress(false));

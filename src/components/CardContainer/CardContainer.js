@@ -12,9 +12,9 @@ export const CardContainer = (props) => {
           houseName={houseObject.name}
           houseWords={houseObject.words}
           houseFounded={houseObject.founded || 'N/A'}
-          houseSeats={(houseObject.seats).join(', ')}
-          houseTitles={(houseObject.titles).join(', ')}
-          houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ')}
+          houseSeats={(houseObject.seats).join(', ') || ''}
+          houseTitles={(houseObject.titles).join(', ') || ''}
+          houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ') || ''}
           houseCoatOfArms={houseObject.coatOfArms}
         />
       );
