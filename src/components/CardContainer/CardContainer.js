@@ -9,6 +9,7 @@ export const CardContainer = (props) => {
       return (
         <HouseCard
           key={`house-card-${index}`}
+          clickFunction={props.addClick ? props.toggleFunction : () => {}}
           houseName={houseObject.name}
           houseWords={houseObject.words}
           houseFounded={houseObject.founded || 'N/A'}
@@ -16,6 +17,7 @@ export const CardContainer = (props) => {
           houseTitles={(houseObject.titles).join(', ') || ''}
           houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ') || ''}
           houseCoatOfArms={houseObject.coatOfArms}
+          displayMembers={houseObject.displayMembers}
           houseMemberList={houseObject.displayMembers === true ? (houseObject.swornMemberNames).join(', ') : ''}
         />
       );
@@ -34,6 +36,7 @@ export const CardContainer = (props) => {
   // default CardContainer;
 
 CardContainer.propTypes = {
-  houseArray: PropTypes.array
-
+  houseArray: PropTypes.array,
+  addClick: PropTypes.bool,
+  toggleFunction: PropTypes.func
 };

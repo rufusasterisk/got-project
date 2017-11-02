@@ -6,7 +6,8 @@ const HouseCard = (props) => {
 
 
   return (
-    <article className="Card">
+    <article className="Card"
+      onClick={ () => { props.clickFunction(props.houseName, !props.displayMembers)}}>
       <h2>{props.houseName}</h2>
       <h3>{props.houseWords}</h3>
       <h3>Founded: {props.houseFounded}</h3>

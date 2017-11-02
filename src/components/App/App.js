@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 // import PropTypes, { shape, func, string } from 'prop-types';
 import PropTypes, { func } from 'prop-types';
 import logo from './logo.svg';
-// import loading from '../../../public/wolf.gif';
+import loading from './wolf.gif';
 import './App.css';
 import { connect } from 'react-redux';
 import { fakeAction } from '../../actions';
-import { getHouseData } from '../../actions/AppActions';
+import { getHouseData, toggleMemberDisplay } from '../../actions/AppActions';
 import { CardContainer } from '../CardContainer/CardContainer';
 
 class App extends Component {
@@ -16,15 +16,15 @@ class App extends Component {
   }
 
   conditionalRender() {
-    if ( this.props.houseData === []) {
+    if ( this.props.houseData.length === 0 ) {
       return (
         <div className='App'>
           <div className='App-header'>
             <img src={logo} className='App-logo' alt='logo' />
-            <h2>Welcome to Westeros</h2>
+            <h2>Welcome to </h2>
           </div>
           <div className='Display-info'>
-            <img src={'../../../public/wolf.gif'} className='loading-gif' alt='loading' />
+            <img id='wolf' src={loading} className='loading-gif' alt='loading' />
           </div>
         </div>);
     } else {
@@ -35,7 +35,10 @@ class App extends Component {
             <h2>Welcome to Westeros</h2>
           </div>
           <div className='Display-info'>
-            <CardContainer houseArray={this.props.houseData}/>
+            <CardContainer
+              houseArray={this.props.houseData}
+              toggleFunction={this.props.toggleMemberDisplay}
+              addClick={this.props.fetchSuccess} />
           </div>
         </div>
       );
@@ -43,22 +46,21 @@ class App extends Component {
   }
 
   render() {
-    return (
-      {conditionalRender();}
-    )
+    return this.conditionalRender();
   }
 }
 
 App.propTypes = {
-  fake: PropTypes.string,
-  fakeAction: func.isRequired,
   getHouseData: func,
-  houseData: PropTypes.array
+  houseData: PropTypes.array,
+  toggleMemberDisplay: PropTypes.func,
+  fetchSuccess: PropTypes.bool
 };
 
-const mapStateToProps = ({ fake, houseData }) => ({ fake, houseData });
+const mapStateToProps = ({ houseData, fetchSuccess }) => ({  houseData });
 const mapDispatchToProps = dispatch => ({
   fakeAction: () => dispatch(fakeAction()),
-  getHouseData: () => dispatch(getHouseData())
+  getHouseData: () => dispatch(getHouseData()),
+  toggleMemberDisplay: (houseName, status) => dispatch(toggleMemberDisplay(houseName, status))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
