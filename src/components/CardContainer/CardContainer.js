@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HouseCard from '../HouseCard/HouseCard';
 
-const CardContainer = () => {
+const CardContainer = (props) => {
 
   const cardArrayBuilder = (myArray) => {
     return myArray.map( (houseObject, index) => {
@@ -25,7 +25,7 @@ const CardContainer = () => {
 
   return (
     <section className={'house-card-container'}>
-      {cardArrayBuilder()}
+      {cardArrayBuilder(props.?)}
     </section>
   );
 };
