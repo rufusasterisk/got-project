@@ -30,7 +30,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  fake: shape({ fake: string }),
+  fake: PropTypes.string,
   fakeAction: func.isRequired,
   getHouseData: func
 };

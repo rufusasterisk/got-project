@@ -25,9 +25,13 @@ export const getHouseData = (fetchData) => (dispatch) => {
     .then(response => response.json())
     .then(parsedResponse => {
       console.log(parsedResponse);
+      dispatch(fetchInProgress(false));
+      dispatch(fetchSuccess(true));
       dispatch(setHouseData(parsedResponse));
     })
     .catch(error => {
+      dispatch(fetchInProgress(false));
+      dispatch(fetchFailure(true));
       alert(`There was an error with the request: `, error);
     });
 };
