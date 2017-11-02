@@ -6,6 +6,8 @@ import './App.css';
 import { connect } from 'react-redux';
 import { fakeAction } from '../../actions';
 import { getHouseData } from '../../actions/AppActions';
+import { CardContainer } from '../CardContainer/CardContainer';
+
 class App extends Component {
 
   componentDidMount() {
@@ -24,6 +26,7 @@ class App extends Component {
           }}> FAKE ACTION</button>
         </div>
         <div className='Display-info'>
+          <CardContainer houseArray={this.props.houseData}/>
         </div>
       </div>
     );
@@ -36,7 +39,7 @@ App.propTypes = {
   getHouseData: func
 };
 
-const mapStateToProps = ({ fake }) => ({ fake });
+const mapStateToProps = ({ fake, houseData }) => ({ fake, houseData });
 const mapDispatchToProps = dispatch => ({
   fakeAction: () => dispatch(fakeAction()),
   getHouseData: () => dispatch(getHouseData())
