@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import PropTypes, { shape, func, string } from 'prop-types';
 import PropTypes, { func } from 'prop-types';
 import logo from './logo.svg';
-// import loading from '../../../public/wolf.gif';
+import loading from './wolf.gif';
 import './App.css';
 import { connect } from 'react-redux';
 import { fakeAction } from '../../actions';
@@ -16,15 +16,15 @@ class App extends Component {
   }
 
   conditionalRender() {
-    if ( this.props.houseData === []) {
+    if ( this.props.houseData.length === 0 ) {
       return (
         <div className='App'>
           <div className='App-header'>
             <img src={logo} className='App-logo' alt='logo' />
-            <h2>Welcome to Westeros</h2>
+            <h2>Welcome to </h2>
           </div>
           <div className='Display-info'>
-            <img src={'../../../public/wolf.gif'} className='loading-gif' alt='loading' />
+            <img id='wolf' src={loading} className='loading-gif' alt='loading' />
           </div>
         </div>);
     } else {
@@ -43,9 +43,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      {conditionalRender();}
-    )
+    return this.conditionalRender();
   }
 }
 
