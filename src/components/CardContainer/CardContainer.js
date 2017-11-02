@@ -17,6 +17,7 @@ export const CardContainer = (props) => {
           houseTitles={(houseObject.titles).join(', ') || ''}
           houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ') || ''}
           houseCoatOfArms={houseObject.coatOfArms}
+          displayMembers={houseObject.displayMembers}
           houseMemberList={houseObject.displayMembers === true ? (houseObject.swornMemberNames).join(', ') : ''}
         />
       );
