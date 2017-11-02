@@ -1,10 +1,17 @@
 import { combineReducers } from 'redux';
 import { fake } from './fake-reducer';
-import { houseData } from './AppReducers';
+import {
+  houseData,
+  fetchFailure,
+  fetchInProgress,
+  fetchSuccess } from './AppReducers';
 
 const rootReducer = combineReducers({
   fake,
-  houseData
+  houseData,
+  fetchFailure,
+  fetchInProgress,
+  fetchSuccess
 });
 
 
