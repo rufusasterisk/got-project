@@ -2,6 +2,14 @@ export const houseData = (state = [], action) => {
   switch (action.type) {
   case 'SET_HOUSE_DATA':
     return action.houseData;
+  case 'TOGGLE_MEMBER_DISPLAY': {
+    const arrayTarget = state.findIndex( house => {
+      return house.name === action.houseName;
+    });
+    const updatedHouseData = state;
+    updatedHouseData[arrayTarget] = Object.assign({}, updatedHouseData[arrayTarget], {displayMembers: action.status});
+    return updatedHouseData;
+  }
   default:
     return state;
   }

@@ -18,6 +18,12 @@ export const setHouseData = (houseData) => ({
   houseData
 });
 
+export const toggleMemberDisplay = (houseName, status) => ({
+  type: 'TOGGLE_MEMBER_DISPLAY',
+  houseName,
+  status
+});
+
 const buildFetchPayload = (url) => ({
   body: JSON.stringify({url: url}),
   headers: {
@@ -27,16 +33,20 @@ const buildFetchPayload = (url) => ({
   credentials: 'omit'
 });
 
+const getSwornMemberName = (memberURL) => {
+  fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
+    .then( response => {
+      return response.json();
+    })
+    .then(memberObject => {
+      return memberObject.name;
+    });
+};
+
 const getSwornMemberData = (houseArray) => (dispatch) => {
   const compiledData = houseArray.map( (house) => {
     const unresolvedSwornMemberPromises = house.swornMembers.map( (memberURL) => {
-      return fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
-        .then( response => {
-          return response.json();
-        })
-        .then(memberObject => {
-          return memberObject.name;
-        });
+      return getSwornMemberName(memberURL);
     });
     return Promise.all(unresolvedSwornMemberPromises)
       .then(swornMemberStringArray => {
@@ -45,27 +55,24 @@ const getSwornMemberData = (houseArray) => (dispatch) => {
   });
   Promise.all(compiledData)
     .then( compiledDataArray => {
-      console.log(compiledDataArray);
       dispatch(setHouseData(compiledDataArray));
+      dispatch(fetchInProgress(false));
+      dispatch(fetchSuccess(true));
     });
 };
 
 
-export const getHouseData = (fetchData) => (dispatch) => {
+export const getHouseData = () => (dispatch) => {
   dispatch(fetchInProgress(true));
   return fetch('http://localhost:3001/api/v1/houses')
     .then(response => response.json())
     .then(parsedResponse => {
-      // console.log(parsedResponse);
-      dispatch(fetchInProgress(false));
-      dispatch(fetchSuccess(true));
       dispatch(setHouseData(parsedResponse));
       dispatch(getSwornMemberData(parsedResponse));
     })
     .catch(error => {
       dispatch(fetchInProgress(false));
       dispatch(fetchFailure(true));
-      console.log(error);
       alert(`There was an error with the request: `, error);
     });
 };

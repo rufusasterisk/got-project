@@ -16,6 +16,7 @@ export const CardContainer = (props) => {
           houseTitles={(houseObject.titles).join(', ') || ''}
           houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ') || ''}
           houseCoatOfArms={houseObject.coatOfArms}
+          houseMemberList={houseObject.displayMembers === true ? (houseObject.swornMemberNames).join(', ') : ''}
         />
       );
     });
@@ -34,4 +35,5 @@ export const CardContainer = (props) => {
 
 CardContainer.propTypes = {
   houseArray: PropTypes.array
+
 };
