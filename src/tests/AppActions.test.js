@@ -17,6 +17,19 @@ const expectationFalse = (type) => ({
   status: false
 });
 
+const objectArray = [
+  {
+    name: 'string',
+    otherData: 'value1',
+    moreData: 2
+  },
+  {
+    name: 'stringtastic',
+    otherData: 'value42',
+    moreData: 11
+  }
+];
+
 describe('fetchInProgress', () => {
 
   it('returns an object', () => {
@@ -63,18 +76,6 @@ describe('setHouseData', () => {
   });
 
   it('returns the array passed as houseData', () => {
-    const objectArray = [
-      {
-        name: 'string',
-        otherData: 'value1',
-        moreData: 2
-      },
-      {
-        name: 'stringtastic',
-        otherData: 'value42',
-        moreData: 11
-      }
-    ];
     const expected = {
       type: 'SET_HOUSE_DATA',
       houseData: objectArray
@@ -86,8 +87,30 @@ describe('setHouseData', () => {
 });
 
 describe('getHouseData', () => {
-  fetchMock.get('http://localhost:3001/api/v1/houses', mockData);
-  const myThunked = getHouseData();
-  console.log(myThunked);
+
+  it('dispatches actions from the thunk and stores data', () => {
+    fetchMock.get('http://localhost:3001/api/v1/houses', objectArray);
+    const myThunked = getHouseData();
+    const expected = [
+      fetchInProgress(true),
+      fetchInProgress(false),
+      fetchSuccess(true),
+      setHouseData(objectArray)
+    ];
+    let myDispatched = [];
+    const myMockDispatch = (actionCall) => {
+      myDispatched.push(actionCall);
+    };
+    // const myExpectationPromise = new Promise((resolve) => {
+    //   resolve(myThunked(myMockDispatch));
+    // });
+    // myExpectationPromise.then( (expectation) => {
+    //   expect(expectation).toEqual(expected);
+    // }
+    // );
+    myThunked(myMockDispatch).then( () => {
+      expect(myDispatched).toEqual(expected);
+    });
+  });
 
 });

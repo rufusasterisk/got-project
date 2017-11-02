@@ -21,7 +21,7 @@ export const setHouseData = (houseData) => ({
 
 export const getHouseData = (fetchData) => (dispatch) => {
   dispatch(fetchInProgress(true));
-  fetch('http://localhost:3001/api/v1/houses')
+  return fetch('http://localhost:3001/api/v1/houses')
     .then(response => response.json())
     .then(parsedResponse => {
       // console.log(parsedResponse);
