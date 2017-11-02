@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HouseCard from '../HouseCard/HouseCard';
 
-const CardContainer = (props) => {
+export const CardContainer = (props) => {
 
   const cardArrayBuilder = (myArray) => {
     return myArray.map( (houseObject, index) => {
@@ -14,7 +14,7 @@ const CardContainer = (props) => {
           houseFounded={houseObject.founded || 'N/A'}
           houseSeats={(houseObject.seats).join(', ')}
           houseTitles={(houseObject.titles).join(', ')}
-          houseAncestralWeapons={houseObject.ancestralWeapons}
+          houseAncestralWeapons={(houseObject.ancestralWeapons).join(', ')}
           houseCoatOfArms={houseObject.coatOfArms}
         />
       );
@@ -25,12 +25,12 @@ const CardContainer = (props) => {
 
   return (
     <section className={'house-card-container'}>
-      {cardArrayBuilder(props.?)}
+      {cardArrayBuilder(props.houseArray)}
     </section>
   );
 };
 
-export default CardContainer;
+ // default CardContainer;
 
 CardContainer.propTypes = {
   houseArray: PropTypes.array
