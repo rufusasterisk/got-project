@@ -9,6 +9,7 @@ export const CardContainer = (props) => {
       return (
         <HouseCard
           key={`house-card-${index}`}
+          clickFunction={props.addClick ? props.toggleFunction : () => {}}
           houseName={houseObject.name}
           houseWords={houseObject.words}
           houseFounded={houseObject.founded || 'N/A'}
