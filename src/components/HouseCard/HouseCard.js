@@ -31,7 +31,7 @@ HouseCard.propTypes = {
 
 export default HouseCard;
 
-{ /* <dl>
+/* <dl>
   <dt>Seats:</dt>
   <dd>{props.houseSeats}</dd>
   <dt>Titles:</dt>
@@ -40,4 +40,4 @@ export default HouseCard;
   <dd>{props.houseAncestralWeapons}</dd>
   <dt>Coat of Arms:</dt>
   <dd>{props.houseCoatOfArms}</dd>
-</dl> */ }
+</dl> */
