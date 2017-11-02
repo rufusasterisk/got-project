@@ -6,7 +6,7 @@ const HouseCard = (props) => {
 
 
   return (
-    <article>
+    <article className="Card">
       <h2>{props.houseName}</h2>
       <h3>{props.houseWords}</h3>
       <h3>Founded: {props.houseFounded}</h3>

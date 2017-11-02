@@ -24,13 +24,13 @@ export const CardContainer = (props) => {
   // Display name, words, founded, seats, titles, ancestralWeapons, coatOfArms
 
   return (
-    <section className={'house-card-container'}>
+    <section className={'house-card-container Container'}>
       {cardArrayBuilder(props.houseArray)}
     </section>
   );
 };
 
- // default CardContainer;
+  // default CardContainer;
 
 CardContainer.propTypes = {
   houseArray: PropTypes.array
