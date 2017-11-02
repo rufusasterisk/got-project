@@ -19,11 +19,12 @@ export const setHouseData = (houseData) => ({
 });
 
 const buildFetchPayload = (url) => ({
-  url,
+  body: JSON.stringify({url: url}),
   headers: {
     'Content-Type': 'application/json'
   },
-  method: 'POST'
+  method: 'POST',
+  credentials: 'omit'
 });
 
 
@@ -35,26 +36,32 @@ export const getHouseData = (fetchData) => (dispatch) => {
       // console.log(parsedResponse);
       dispatch(fetchInProgress(false));
       dispatch(fetchSuccess(true));
+      dispatch(setHouseData(parsedResponse));
       const compiledData = parsedResponse.map( (house) => {
         const unresolvedSwornMemberPromises = house.swornMembers.map( (memberURL) => {
-          fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
-            .then( response => response.json())
-            .then(memberObject => memberObject.name);
+          return fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
+            .then( response => {
+              return response.json();
+            })
+            .then(memberObject => {
+              return memberObject.name;
+            });
         });
+        console.log(unresolvedSwornMemberPromises);
         return Promise.all(unresolvedSwornMemberPromises)
           .then(swornMemberStringArray => {
-            Object.assign(house, {displayMembers: false, swornMemberNames: swornMemberStringArray});
+            console.log(house.name);
+            console.log(swornMemberStringArray);
+            return Object.assign(house, {displayMembers: false, swornMemberNames: swornMemberStringArray});
           });
       });
-      compiledData.then(combinedData => {
-        console.log(combinedData);
-
-      })
-      dispatch(setHouseData(parsedResponse));
+        console.log(compiledData);
+        dispatch(setHouseData(compiledData));
     })
     .catch(error => {
       dispatch(fetchInProgress(false));
       dispatch(fetchFailure(true));
+      console.log(error);
       alert(`There was an error with the request: `, error);
     });
 };
