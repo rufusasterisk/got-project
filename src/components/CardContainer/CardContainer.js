@@ -34,6 +34,7 @@ export const CardContainer = (props) => {
   // default CardContainer;
 
 CardContainer.propTypes = {
-  houseArray: PropTypes.array
-
+  houseArray: PropTypes.array,
+  addClick: PropTypes.bool,
+  toggleFunction: PropTypes.func
 };
