@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 const HouseCard = (props) => {
 
 
+
   return (
-    <article className="Card"
-      onClick={ () => { props.clickFunction(props.houseName, !props.displayMembers)}}>
+    <article
+      className="Card"
+      onClick={ () => { props.clickFunction(props.houseName, !props.displayMembers); } } >
       <h2>{props.houseName}</h2>
       <h3>{props.houseWords}</h3>
       <h3>Founded: {props.houseFounded}</h3>
@@ -15,19 +17,23 @@ const HouseCard = (props) => {
       <h4>Titles: {props.houseTitles}</h4>
       <h4>Ancestral Weapons: {props.houseAncestralWeapons}</h4>
       <h4>Coat of Arms: {props.houseCoatOfArms}</h4>
+      {props.displayMembers ? <h4>Sworn Members: {props.houseMemberList}</h4> : ''}
     </article>
   );
 
 };
 
 HouseCard.propTypes = {
+  clickFunction: PropTypes.func,
+  displayMembers: PropTypes.bool,
   houseName: PropTypes.string,
   houseWords: PropTypes.string,
   houseFounded: PropTypes.string,
   houseSeats: PropTypes.string,
   houseTitles: PropTypes.string,
   houseAncestralWeapons: PropTypes.string,
-  houseCoatOfArms: PropTypes.string
+  houseCoatOfArms: PropTypes.string,
+  houseMemberList: PropTypes.string
 };
 
 export default HouseCard;

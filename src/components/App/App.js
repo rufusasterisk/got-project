@@ -15,6 +15,10 @@ class App extends Component {
     this.props.getHouseData();
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps !== this.props;
+  }
+
   conditionalRender() {
     if ( this.props.houseData.length === 0 ) {
       return (
@@ -57,7 +61,7 @@ App.propTypes = {
   fetchSuccess: PropTypes.bool
 };
 
-const mapStateToProps = ({ houseData, fetchSuccess }) => ({  houseData });
+const mapStateToProps = ({ houseData, fetchSuccess }) => ({  houseData, fetchSuccess });
 const mapDispatchToProps = dispatch => ({
   fakeAction: () => dispatch(fakeAction()),
   getHouseData: () => dispatch(getHouseData()),

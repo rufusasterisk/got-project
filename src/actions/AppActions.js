@@ -34,7 +34,7 @@ const buildFetchPayload = (url) => ({
 });
 
 const getSwornMemberName = (memberURL) => {
-  fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
+  return fetch('http://localhost:3001/api/v1/character', buildFetchPayload(memberURL))
     .then( response => {
       return response.json();
     })
